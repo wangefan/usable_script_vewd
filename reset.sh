@@ -11,6 +11,7 @@ adb shell pm list packages | grep 'com\.vewd\.core\|com\.opera\.sdk' | cut -d':'
 echo "clear all com.vewd.core.* ..."
 adb shell pm list packages | grep 'com\.vewd\.core\|com\.opera\.sdk' | cut -d':' -f2 | xargs -r -t -L1 adb shell pm clear 
 adb shell rm -rf '/system/priv-app/com.vewd.*'
+adb shell rm -rf '/system/priv-app/VewdCoreService' # only for RTK project
 
 echo "syncing..."
 adb shell sync

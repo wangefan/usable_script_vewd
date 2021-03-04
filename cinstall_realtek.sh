@@ -1,4 +1,4 @@
-#!/bin/bash
+#/bin/bash      
 
 input_param=$1
 version="-release"
@@ -6,77 +6,27 @@ dir="Release"
 if [ -z "$input_param" ] # not input 
 then
   version="-release"
-  dir="Release_vosui"
+  dir="Release_realtek"
 else
   version="-debug"
-  dir="Debug_vosui"
+  dir="Debug_realtek"
 fi
 
-echo "cinstall, version = ${version}"
+echo "rtk update, version = ${version}"
 
-DIR=../chromium/src/out_gn_android_arm/${dir}/apks
+DIR=../chromium/src/out_gn_android_arm/${dir}
 
-# names of examples you want to install
-#examples_names=( "service" "tis" "tvapp" "fvpplayer" "fvpsign" "hbbtv" "integration" )
-examples_names=(  "tvapp" )
+adb root
+adb shell mount -o rw,remount /system
+adb push ${DIR}/apks/vewd-core-service-release.apk /system/priv-app/VewdCoreService/VewdCoreService.apk
+adb push ${DIR}/lib.java/vewdcore-service-dex.jar /system/framework/vewdcore-service-dex.jar
+adb push ${DIR}/lib.java/vewdcore-shared-dex.jar /system/framework/vewdcore-shared-dex.jar
+adb push ${DIR}/lib.java/vewdcore-client-dex.jar /system/framework/vewdcore-client-dex.jar
 
-function _cmd() {
-  echo $1
-  $1
-  return $?
-}
+#adb push ${DIR}/apks/vewd-core-integration-release.apk /system/priv-app/VewdCoreService/vewd-core-integration-release.apk
+#adb shell pm install /system/priv-app/VewdCoreService/vewd-core-integration-release.apk
+adb install -r -d ${DIR}/apks/vewd-core-integration-release.apk
 
-setup_device() {
-  echo "setup_device"
-  _cmd "adb root"
-  _cmd "adb shell mount -o remount,rw /"
-  _cmd "adb shell mount -o rw,remount /system"
-}
-
-get_name0() {
-  echo "com.vewd.core.${examples_names[$1]}"
-}
-
-get_name1() {
-  local fw_ver=$(adb shell getprop ro.build.description)
-  if [[ $fw_ver == *"ISOPHI"* || $fw_ver == *"winston-user"* ]]; then
-    echo "$(get_name0 $1).fvp"
-  else
-    echo "$(get_name0 $1)"
-  fi
-}
-
-get_name2() {
-  echo "vewd-core-${examples_names[$1]}${version}"
-}
-
-install() {
-  for ((i = 0; i < ${#examples_names[@]}; ++i)); do
-    local apk_file="${DIR}/$(get_name2 i).apk"
-    if [ ! -f "${apk_file}" ]; then
-      echo "${apk_file} does not exist! Ignoring."
-      continue
-    fi
-
-    echo ""
-    _cmd "adb shell mkdir -p /system/priv-app/$(get_name1 i)"
-    _cmd "adb shell chmod 755 /system/priv-app/$(get_name1 i)"
-    _cmd "adb shell chown root:root /system/priv-app/$(get_name1 i)"
-    _cmd "adb push ${apk_file} /system/priv-app/$(get_name1 i)/$(get_name1 i).apk"
-    _cmd "adb shell chmod 644 /system/priv-app/$(get_name1 i)/$(get_name1 i).apk"
-    _cmd "adb shell pm install -r /system/priv-app/$(get_name1 i)/$(get_name1 i).apk"
-    echo "install $(get_name1 i).apk ok"
-  done
-
-  _cmd "adb shell sync"
-}
-
-main() {
-  ./stop_all_service.sh
-  setup_device
-  install
-}
-
-main "${@}"
-
-echo "Done."
+adb shell sync
+read -p "Press enter to reboot"
+adb reboot
