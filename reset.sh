@@ -3,6 +3,7 @@
 adb shell setenforce 0
 adb shell getenforce
 adb shell mount -o remount,rw /
+adb shell mount -o remount,rw /system
 echo "list current com.vewd.core.* packages.."
 adb shell pm list packages | grep 'com\.vewd\.core\|com\.opera\.sdk' | cut -d':' -f2 | xargs -r -t -L1
 
