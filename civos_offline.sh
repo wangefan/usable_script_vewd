@@ -30,12 +30,13 @@ if [ -z "$check_result" ]; then  # not backup yet
     echo "Step4-2: push files .."
 	echo "XXXXXXXXXX path=${image_path}/OS/${sw}"
     adb push "${image_path}/OS/${sw}" "${sw_root_path}"
-    #adb shell chmod 777 "/data/data/com.vewd.core.service/browser_home/contexts/OS/Service\ Worker/"
+    adb shell chown -R u0_a10:u0_a10 "${sw_root_path}"
 else  # already backup
     echo "Step4-1: delete previous service worker files.."
     adb shell "rm -r \"${sw_root_path}${sw}\""
     echo "Step4-2: push files .."
     adb push "${image_path}/OS/${sw}" "${sw_root_path}"
+	adb shell chown -R u0_a10:u0_a10 "${sw_root_path}"
 fi
 
 echo "Step5: delete worker files.."
