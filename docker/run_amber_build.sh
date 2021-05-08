@@ -10,5 +10,5 @@ sudo docker run -it \
 	-v /home/${UN}/Desktop/vewd_projects/tvsdk-amber:/home/${UN}/tvsdk-amber \
     -v ~/bin:/home/${UN}/bin \
     -v ~/.third_party_package_cache:/home/${UN}/.third_party_package_cache \
-    -w /home/${UN}/ \
+    -w /home/${UN}/tvsdk-amber/usable_script_vewd \
     tvsdk-build-sys:latest /bin/bash
