@@ -22,7 +22,7 @@ adb push ${DIR}/apks/vewd-core-service-release.apk /system/priv-app/VewdCoreServ
 adb push ${DIR}/lib.java/vewdcore-service-dex.jar /system/framework/vewdcore-service-dex.jar
 adb push ${DIR}/lib.java/vewdcore-shared-dex.jar /system/framework/vewdcore-shared-dex.jar
 adb push ${DIR}/lib.java/vewdcore-client-dex.jar /system/framework/vewdcore-client-dex.jar
-adb push ${DIR}/libs/vewdcore-client-fvp-dex.jar /system/framework/vewdcore-client-fvp-dex.jar
+adb push ${DIR}/lib.java/vewdcore-client-fvp-dex.jar /system/framework/vewdcore-client-fvp-dex.jar
 
 #adb push ${DIR}/apks/vewd-core-integration-release.apk /system/priv-app/VewdCoreService/vewd-core-integration-release.apk
 #adb shell pm install /system/priv-app/VewdCoreService/vewd-core-integration-release.apk
