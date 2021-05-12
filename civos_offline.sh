@@ -5,6 +5,11 @@ sw_root_path="/data/data/com.vewd.core.service/browser_home/contexts/OS/"
 sw="Service Worker/"
 backup="Service Worker_old/"
 
+owner=$(adb shell "ls -dl \"${sw_root_path}\" | cut -d' ' -f3")
+group=$(adb shell "ls -dl \"${sw_root_path}\" | cut -d' ' -f4")
+
+echo "Step0: owner = ${owner}, group = ${group}"
+
 echo "Step1:stop all services..."
 #adb shell pm list packages | grep 'com\.vewd\.core\|com\.opera\.sdk' | cut -d':' -f2 | xargs -r -t -L1 adb shell am force-stop
 adb root
@@ -19,7 +24,7 @@ echo "Step3: Extract files.."
 unzip ${zip_path}
 image_path=$(find . -name 'vosFwImage*' -type d)
 echo "image_path = ${image_path}"
-
+++
 echo "Step4: Push files.. "
 # check if service worker exist.
 check_result=$(adb shell "ls \"${sw_root_path}${backup}"\")
@@ -30,13 +35,13 @@ if [ -z "$check_result" ]; then  # not backup yet
     echo "Step4-2: push files .."
 	echo "XXXXXXXXXX path=${image_path}/OS/${sw}"
     adb push "${image_path}/OS/${sw}" "${sw_root_path}"
-    adb shell chown -R u0_a10:u0_a10 "${sw_root_path}"
+    adb shell chown -R ${owner}:${group} "${sw_root_path}"
 else  # already backup
     echo "Step4-1: delete previous service worker files.."
     adb shell "rm -r \"${sw_root_path}${sw}\""
     echo "Step4-2: push files .."
     adb push "${image_path}/OS/${sw}" "${sw_root_path}"
-	adb shell chown -R u0_a10:u0_a10 "${sw_root_path}"
+	adb shell chown -R ${owner}:${group} "${sw_root_path}"
 fi
 
 echo "Step5: delete worker files.."
