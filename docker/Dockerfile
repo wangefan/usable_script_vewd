@@ -85,3 +85,4 @@ USER $USER_NAME
 ENV PATH="${PATH}:/home/${USER_NAME}/bin:/home/${USER_NAME}/depot_tools"
 RUN echo "export PATH = ${PATH}"
 RUN echo "export PS1=\"[Container \\\\t \\\\w] \"" >> /home/${USER_NAME}/.bashrc
+RUN echo "/opt/goma-client/goma_ctl.py start" >> /home/${USER_NAME}/.bashrc
