@@ -22,8 +22,9 @@ echo "zip path=${zip_path}"
 # todo: add if
 echo "Step3: Extract files.."
 unzip ${zip_path}
+image_path=$(find . -name 'vosFwImage*' -type d)
 echo "image_path = ${image_path}"
-++
+
 echo "Step4: Push files.. "
 # check if service worker exist.
 check_result=$(adb shell "ls \"${sw_root_path}${backup}\"")
