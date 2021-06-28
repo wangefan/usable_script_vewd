@@ -1,8 +1,9 @@
 {
-  "tv_url" : "https://blade-offline.otvs.tv/tv/index.html?keys=firetv&rtConf=fvp&dtvProvider=platform&deviceAccessibility=enabled&overlayHandling=disabled&mdsFetcherUrl=test-suite",
-  "epg_url" : "https://blade-offline.otvs.tv/epg/index.html?keys=firetv&rtConf=fvp&dtvProvider=platform&deviceAccessibility=enabled&overlayHandling=disabled&mdsFetcherUrl=test-suite",
-  "portal_url" : "https://blade-offline.otvs.tv/fvp/index.html?keys=firetv&rtConf=fvp&dtvProvider=platform&deviceAccessibility=enabled&overlayHandling=disabled&mdsFetcherUrl=test-suite",
+  "tv_url" : "https://blade-offline.otvs.tv/tv/index.html?keys=realtek&rtConf=fvp&dtvProvider=platform&androidScanMocks=true&themeId=realtek&mdsFetcherUrl=test-suite",
+  "epg_url" : "https://blade-offline.otvs.tv/epg/index.html?keys=realtek&rtConf=fvp&dtvProvider=platform&androidScanMocks=true&themeId=realtek&mdsFetcherUrl=test-suite",
+  "portal_url" : "https://blade-offline.otvs.tv/fvp/index.html?keys=realtek&rtConf=fvp&dtvProvider=platform&androidScanMocks=true&themeId=realtek&mdsFetcherUrl=test-suite",
   "epg_app_name": "epg",
   "portal_app_name": "fvp",
   "tv_app_name": "tv"
 }
+
